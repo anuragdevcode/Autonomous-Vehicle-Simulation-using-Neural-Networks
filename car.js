@@ -11,6 +11,7 @@ class Car{
         this.maxSpeed = 3;
         this.friction = 0.05
         this.angle = 0;
+        this.sensor = new Sensor(this);// sensor is added
         this.controls = new Controls();
 
         this.img = new Image();
@@ -18,6 +19,7 @@ class Car{
     }
     update(){
         this.#move();
+        this.sensor.update();
     }
 
     
@@ -76,6 +78,7 @@ class Car{
             this.height
         );
          ctx.restore();        // restore canva state
+         this.sensor.draw(ctx);
     }
 
 }
