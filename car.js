@@ -17,9 +17,9 @@ class Car{
         this.img = new Image();
         this.img.src = "car.png";
     }
-    update(){
+    update(roadBorders){
         this.#move();
-        this.sensor.update();
+        this.sensor.update(roadBorders);
     }
 
     
