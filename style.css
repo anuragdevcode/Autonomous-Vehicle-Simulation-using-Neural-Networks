@@ -1,9 +1,12 @@
 body{
     margin: 0;
-    background: black;
+    background: rgb(187, 187, 187);
     overflow: hidden;
     text-align: center;
 }
-#myCanvas{
+#carCanvas{
     background:lightgray;
+}
+#networkCanvas{
+    background:rgb(0, 0, 0);
 }
