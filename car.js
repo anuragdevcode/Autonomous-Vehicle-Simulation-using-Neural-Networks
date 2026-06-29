@@ -1,5 +1,5 @@
 class Car{
-    constructor(x,y,width,height){
+    constructor(x,y,width,height, controlType){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -11,25 +11,34 @@ class Car{
         this.maxSpeed = 3;
         this.friction = 0.05
         this.angle = 0;
+        if(controlType != "DUMMY"){
         this.sensor = new Sensor(this);// sensor is added
-        this.controls = new Controls();
+        }
+        this.controls = new Controls(controlType);
         this.damaged = false;
         // visuals
         this.img = new Image();
         this.img.src = "car.png";
     }
-    update(roadBorders){
+    update(roadBorders,traffic){
         if(!this.damaged){
         this.#move();
         this.polygon = this.#createPolygon();
-        this.damaged = this.#assessDamage(roadBorders);
+        this.damaged = this.#assessDamage(roadBorders,traffic);
         }
-        this.sensor.update(roadBorders);
+        if(this.sensor){
+            this.sensor.update(roadBorders,traffic);
+        }
     }
 
-    #assessDamage(roadBorders){
+    #assessDamage(roadBorders,traffic){
         for(let i = 0; i<roadBorders.length;i++){
             if(polysIntersect(this.polygon,roadBorders[i])){
+                return true;
+            }
+        }
+         for(let i = 0; i<traffic.length;i++){
+            if(polysIntersect(this.polygon,traffic[i].polygon)){
                 return true;
             }
         }
@@ -83,7 +92,7 @@ class Car{
             this.speed= this.maxSpeed;
         }
         if(this.speed<-this.maxSpeed/2){
-            this.speed =- this.maxSpeed/2;
+            this.speed = -this.maxSpeed/2;
         }
         // steering
         if(this.speed!==0){
@@ -124,7 +133,7 @@ class Car{
         );
     }
          ctx.restore();        // restore canva state
-         this.sensor.draw(ctx);
+         if(this.sensor)this.sensor.draw(ctx);
     }
 
 }

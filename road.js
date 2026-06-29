@@ -7,9 +7,9 @@ class Road{
         this.left = x-width/2;
         this.right = x+width/2;
 
-        const infintiy = 100000;
-        this.top = -infintiy;
-        this.bottom = infintiy;
+        const infinity = 100000;
+        this.top = -infinity;
+        this.bottom = infinity;
         const topLeft ={x:this.left,y:this.top};
         const topRight ={x:this.right,y:this.top};
         const bottomLeft ={x:this.left,y:this.bottom};
@@ -19,9 +19,13 @@ class Road{
             [topRight,bottomRight]
         ];
     }
-
+    getLaneCenter(laneIndex){
+        const laneWidth=this.width/this.laneCount;
+        return this.left+laneWidth/2+
+            Math.min(laneIndex,this.laneCount-1)*laneWidth;
+    }
     draw(ctx){
-        ctx.lineWidth =5;
+        ctx.lineWidth = 5;
         ctx.strokeStyle="white";
 
         // lanecount using LinearInterpolation 
